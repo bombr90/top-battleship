@@ -1,0 +1,65 @@
+/* style.css */
+
+* {
+  /* margin: 0px; */
+  /* padding: 0px; */
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  box-sizing: border-box;
+  border: 1px solid black;
+}
+
+#container {
+  display:flex;
+  justify-content: center;
+  margin-bottom: 16px;;
+}
+
+#gameDisplay {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 40px);
+  grid-template-rows: repeate(10,40px);
+  box-shadow: 4px 4px 8px gray;
+  background-color: black;
+}
+
+.square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  background: whitesmoke;
+  border: 1px dashed black;
+}
+
+.shade {
+  background-color: lightgray;
+}
+/* #gui {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: center;
+  gap: 16px
+} */
+
+/* fieldset {
+  display:flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+#output {
+  display: grid;
+}
+
+#guiDisplay {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  white-space: pre;
+} */
