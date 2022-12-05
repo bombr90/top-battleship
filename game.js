@@ -30,18 +30,18 @@ const game = () => {
       renderFleet();
       if (p2Board.getShips().length === 5) {
         gameDisplay.hideInput();
-        gameDisplay.renderFleet(p1Grid, p1Board.getShips());
         gameDisplay.outputDisplay(`${p1.id}, Let's play battleship!`)
       }
     }
   }
 
   // Private methods
-  const until = (predFn) => {
-    const poll = (done) =>
-      predFn() ? done() : setTimeout(() => poll(done), 1000);
-    return new Promise(poll);
-  };
+
+const until = (predFn) => {
+  const poll = (done) =>
+    predFn() ? done() : setTimeout(() => poll(done), 500);
+  return new Promise(poll);
+};
 
   const placeShips = () => {
     gameDisplay.setDropTarget(p2Grid);
@@ -49,15 +49,6 @@ const game = () => {
     const sample = [5,4,3,2,1];
     for (const vals of sample) {
       gameDisplay.renderDragShips(p2Board, vals);
-    }
-  };
-
-  const setId = (el) => {
-    const newId = gameDisplay.getId();
-    if (newId) {
-      gameDisplay.hideInput();
-      p1.id = newId;
-      gameDisplay.greetingDisplay(p1.id);
     }
   };
 
@@ -119,6 +110,14 @@ const game = () => {
   };
 
   // Public methods
+  const setId = (el) => {
+    const newId = gameDisplay.getId();
+    if (newId) {
+      gameDisplay.hideInput();
+      p1.id = newId;
+      gameDisplay.greetingDisplay(p1.id);
+    }
+  };
 
   const renderBoard = () => {
     p1Grid = gameDisplay.renderGrid(p1.id, p1Board.getBoard());
@@ -135,7 +134,7 @@ const game = () => {
     renderBoard();
     gameDisplay.outputDisplay(`Type in your desired name (and click set) then place your ships on the board (click to rotate)`);
     placeShips();
-    await until(() => { p2Board.getShips.length === 5 })
+    await until(() => p2Board.getShips().length === 5);
     addBoardListeners();
   };
 

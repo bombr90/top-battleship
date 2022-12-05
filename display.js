@@ -42,7 +42,6 @@ const display = (payLoad, checkPayLoad) => {
         square.classList.add("square");
         square.dataset.x = j;
         square.dataset.y = i;
-        square.textContent = `x:${j}, y:${i}`;
         newGrid.appendChild(square);
       }
     }
