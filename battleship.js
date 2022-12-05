@@ -16,6 +16,7 @@ const Ship = (shipLength) => {
     coords.push([x,y])
   }
 
+
   return {
     length,
     getHits,
@@ -40,27 +41,52 @@ const GameBoard = () => {
   }
 
   const placeShip = (newShip, startCoords, endCoords) => {
-    // parse coords for valid range 0 to 10, if true, copy current board and check that there's no overlap. if no overlap replace existing board with updated board
     if(!checkValidCoords(...startCoords, ...endCoords)) {
       return false
-    } 
-
-    let newBoard = getBoard();
+    }
+    // Deep copy needed, slice shallow copy will change original 2D array
+    let newBoard = JSON.parse(JSON.stringify(getBoard()));
+    const currShip = Ship(newShip.length); 
 
     for (let i = startCoords[0]; i <= endCoords[0]; i++) {
       for (let j = startCoords[1]; j <= endCoords[1]; j++) {
-        if (newBoard[i][j]) {
-          return false;
+        if (newBoard[i][j] !== null) {
+          return false
         }
         newBoard[i][j] = ships.length+1;
-        newShip.addCoords([i,j])
+        currShip.addCoords([i,j]);
       }
     }
-    
-    ships.push(newShip)
-    board = newBoard;
+    ships.push(currShip);
+    board = JSON.parse(JSON.stringify(newBoard));
     return true;
   };
+
+  const autoPlaceShips = () => {
+    for (let i = 0; i < 5; i++) {
+      const newShip = Ship(i+1)
+      let loopCount = 0;
+      let shipPlaced = false
+      while (shipPlaced === false){
+        const startCoords = [
+          Math.floor(Math.random() * 9),
+          Math.floor(Math.random() * 9),
+        ];
+        const endCoords =
+          Math.floor(Math.random() * 2) === 1
+            ? [startCoords[0], startCoords[1] + i]
+            : [startCoords[0] + i, startCoords[1]];
+        shipPlaced = placeShip(newShip, startCoords, endCoords);
+        loopCount++;
+        if (loopCount > 100) {
+          console.log("autoplace error");
+          return false;
+        }
+      }
+    }
+    return true
+  };
+
 
   const getBoard = () => {
     return board;
@@ -83,7 +109,7 @@ const GameBoard = () => {
         coordinates: [x, y],
         status: 'hit'
       });
-      ships[shipsIndex-1].hit(2)
+      ships[shipsIndex-1].hit()
 
       return 'hit'
     } else {
@@ -109,6 +135,7 @@ const GameBoard = () => {
 
   return {
     placeShip,
+    autoPlaceShips,
     getBoard,
     getMoves,
     getShips,
@@ -119,7 +146,7 @@ const GameBoard = () => {
 }
 
 const Player = (name) => {
-  const id = name;
+  let id = name;
   const playerMoves = [];
   let remainingMoves = [...Array(100).keys()]
 
@@ -133,6 +160,9 @@ const Player = (name) => {
   const convertToIndex = ([x,y]) => x*10 + y
   const convertToCoord = (el) => [(el-el%10)/10 , el%10]
 
+  const setId = (str) => { 
+    id = str
+  }
   const getMoves = () => playerMoves
   const getRemainingMoves = () => remainingMoves
 
@@ -158,6 +188,7 @@ const Player = (name) => {
 
   return {
     id,
+    setId,
     getMoves,
     getRemainingMoves,
     attack,

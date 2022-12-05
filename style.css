@@ -5,20 +5,33 @@
   /* padding: 0px; */
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   box-sizing: border-box;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 #container {
   display:flex;
   justify-content: center;
-  margin-bottom: 16px;;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+  padding: 8px;
+  margin-bottom: 16px;
 }
 
 #gameDisplay {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 400px 30px;
   gap: 8px;
   padding: 8px;
+  justify-items: center;
+  align-items: center;
 }
+
+.gameDisplayLabel {
+  grid-row: 2;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(10, 40px);
@@ -37,29 +50,51 @@
   border: 1px dashed black;
 }
 
+.grid:first-child>.square:hover {
+  background-color: lightgray;
+}
+
 .shade {
   background-color: lightgray;
 }
-/* #gui {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  justify-content: center;
-  gap: 16px
-} */
 
-/* fieldset {
+.dragOver {
+  scale: 1.1em;
+  border-color: red;
+  border-width: 3px;
+}
+#gui {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px; 
+}
+
+fieldset {
   display:flex;
   gap: 8px;
   justify-content: center;
 }
 
-#output {
+#output, #input {
   display: grid;
 }
 
-#guiDisplay {
+.shipTemplate {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  white-space: pre;
-} */
+  flex-direction: row;
+  min-height: 40px;
+  min-width: 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+.verticalFlex {
+  flex-direction: column-reverse;
+}
+
+#dragShip {
+  display: flex;
+  gap: 16px;
+}

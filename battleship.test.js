@@ -29,7 +29,7 @@ describe("Ship factory tests", () => {
       expect(testShip.getHits()).toEqual(1);
     });
   });
-
+  
   describe("isSunk() function", () => {
     const testShip2 = Ship(len);
     test("Zero hits are inadequate to sink the ship (1)", () => {
@@ -65,6 +65,7 @@ describe('Gameboard factory tests', () => {
     test("check overall object properties and properties", () => {
       const testBoard = GameBoard();
       expect(testBoard).toMatchObject({
+        autoPlaceShips: expect.any(Function),
         placeShip: expect.any(Function),
         getBoard: expect.any(Function),
         getMoves: expect.any(Function),
@@ -200,6 +201,7 @@ describe("Player factory tests", () => {
     test("check overall object properties and properties", () => {
       expect(testPlayer).toMatchObject({
         id: "test",
+        setId: expect.any(Function),
         getMoves: expect.any(Function),
         getRemainingMoves: expect.any(Function),
         attack: expect.any(Function),
